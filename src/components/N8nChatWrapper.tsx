@@ -15,7 +15,7 @@ export default function N8nChatWrapper() {
         createChat({
             webhookUrl: siteConfig.n8nWebhookUrl,
             target: containerRef.current,
-            mode: "window",
+            mode: "fullscreen",
             initialMessages: [
                 `Hi! I'm ${siteConfig.name.split(' ')[0]}'s official AI assistant.`,
                 "I have access to his full resume, technical project notes, and career history.",
