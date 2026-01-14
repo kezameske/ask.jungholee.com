@@ -1,6 +1,7 @@
 import { siteConfig } from "@/config/site";
-import { Download, Linkedin, Github, ExternalLink, Cpu, Database, MessageSquare, Rocket, CheckCircle2, Music, Car, Monitor, Briefcase, Zap } from "lucide-react";
+import { Download, MessageSquare } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
+import FunFactsTicker from "@/components/FunFactsTicker";
 
 export default function Home() {
   return (
@@ -14,8 +15,6 @@ export default function Home() {
         </div>
 
         <div className="max-w-4xl mx-auto text-center">
-
-
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
             Hi, I'm <span className="text-gradient">{siteConfig.name}</span>
           </h1>
@@ -49,43 +48,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Fun Facts Section */}
-      <section className="py-20 px-4 bg-white/5 border-y border-white/5">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-center gap-3 mb-12">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center">
-              <Rocket className="w-6 h-6 text-indigo-400" />
-            </div>
-            <div>
-              <h2 className="text-3xl font-bold">Fun facts (I execute)</h2>
-              <p className="text-muted-foreground">My journey from IT operations to Product Management.</p>
-            </div>
-          </div>
-
-          <div className="grid gap-4">
-            {siteConfig.funFacts.map((fact, index) => {
-              // Simple logic to pick an icon based on content
-              let Icon = CheckCircle2;
-              if (fact.includes("PC") || fact.includes("IT") || fact.includes("desktop")) Icon = Monitor;
-              if (fact.includes("car")) Icon = Car;
-              if (fact.includes("Music") || fact.includes("Recording")) Icon = Music;
-              if (fact.includes("Product")) Icon = Briefcase;
-              if (fact.includes("AI") || fact.includes("workflow")) Icon = Zap;
-
-              return (
-                <div key={index} className="glass p-5 rounded-2xl border border-white/10 flex gap-4 items-start hover:border-indigo-500/30 transition-all group">
-                  <div className="mt-1 w-6 h-6 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500/20 transition-colors">
-                    <Icon className="w-3.5 h-3.5 text-indigo-400" />
-                  </div>
-                  <p className="text-lg text-muted-foreground leading-relaxed group-hover:text-white transition-colors">
-                    {fact}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* Fun Facts Ticker */}
+      <FunFactsTicker facts={siteConfig.funFacts} />
 
       {/* Chatbot Section */}
       <Chatbot />
