@@ -28,7 +28,7 @@ export default function N8nChatWrapper() {
                     title: `${siteConfig.name.split(' ')[0]}'s Assistant`,
                     subtitle: "AI Workflow Online",
                     footer: "",
-                    getStarted: "New Conversation",
+                    getStarted: "Start Chat",
                     inputPlaceholder: "Type your question here...",
                     closeButtonTooltip: "Close",
                 }
