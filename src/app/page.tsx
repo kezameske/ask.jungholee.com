@@ -1,65 +1,112 @@
-import Image from "next/image";
+import { siteConfig } from "@/config/site";
+import { Download, Linkedin, Github, ExternalLink, Cpu, Database, MessageSquare, Rocket, CheckCircle2, Music, Car, Monitor, Briefcase, Zap } from "lucide-react";
+import Chatbot from "@/components/Chatbot";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen selection:bg-indigo-500/30">
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
+        {/* Background blobs */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full animate-pulse"></div>
+          <div className="absolute bottom-[10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/10 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
+        </div>
+
+        <div className="max-w-4xl mx-auto text-center">
+
+
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+            Hi, I'm <span className="text-gradient">{siteConfig.name}</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p className="text-xl md:text-2xl text-muted-foreground font-medium mb-8 max-w-3xl mx-auto leading-relaxed">
+            {siteConfig.headline}
           </p>
+
+          <p className="text-lg md:text-xl text-muted-foreground/80 mb-10 max-w-2xl mx-auto leading-relaxed">
+            {siteConfig.pitch}
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <a
+              href="#chat"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-indigo-600/20"
+            >
+              <MessageSquare className="w-5 h-5" />
+              Ask my AI Assistant
+            </a>
+            <a
+              href={siteConfig.links.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl glass hover:bg-white/10 font-semibold transition-all hover:scale-105 active:scale-95 border border-white/10"
+            >
+              <Download className="w-5 h-5" />
+              Resume (PDF)
+            </a>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Fun Facts Section */}
+      <section className="py-20 px-4 bg-white/5 border-y border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-12">
+            <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center">
+              <Rocket className="w-6 h-6 text-indigo-400" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold">Fun facts (I execute)</h2>
+              <p className="text-muted-foreground">My journey from IT operations to Product Management.</p>
+            </div>
+          </div>
+
+          <div className="grid gap-4">
+            {siteConfig.funFacts.map((fact, index) => {
+              // Simple logic to pick an icon based on content
+              let Icon = CheckCircle2;
+              if (fact.includes("PC") || fact.includes("IT") || fact.includes("desktop")) Icon = Monitor;
+              if (fact.includes("car")) Icon = Car;
+              if (fact.includes("Music") || fact.includes("Recording")) Icon = Music;
+              if (fact.includes("Product")) Icon = Briefcase;
+              if (fact.includes("AI") || fact.includes("workflow")) Icon = Zap;
+
+              return (
+                <div key={index} className="glass p-5 rounded-2xl border border-white/10 flex gap-4 items-start hover:border-indigo-500/30 transition-all group">
+                  <div className="mt-1 w-6 h-6 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500/20 transition-colors">
+                    <Icon className="w-3.5 h-3.5 text-indigo-400" />
+                  </div>
+                  <p className="text-lg text-muted-foreground leading-relaxed group-hover:text-white transition-colors">
+                    {fact}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Chatbot Section */}
+      <Chatbot />
+
+      {/* Footer */}
+      <footer className="py-20 px-4 border-t border-white/5">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+          <div>
+            <h3 className="text-2xl font-bold mb-2">{siteConfig.name}</h3>
+
+          </div>
+
+          <div className="flex gap-6">
+            <a href={`mailto:${siteConfig.email}`} className="text-muted-foreground hover:text-white transition-colors">Email</a>
+            <a href={siteConfig.links.linkedin} target="_blank" className="text-muted-foreground hover:text-white transition-colors">LinkedIn</a>
+            <a href={siteConfig.links.github} target="_blank" className="text-muted-foreground hover:text-white transition-colors">GitHub</a>
+          </div>
+
+
+        </div>
+      </footer>
+    </main>
   );
 }
