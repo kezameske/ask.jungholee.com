@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { createChat } from "@n8n/chat";
+import "@n8n/chat/dist/style.css";
 import { siteConfig } from "@/config/site";
 
 export default function N8nChatWrapper() {
