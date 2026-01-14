@@ -1,5 +1,5 @@
 import { siteConfig } from "@/config/site";
-import { Download, MessageSquare } from "lucide-react";
+import { Download, MessageSquare, Rocket } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
 import FunFactsTicker from "@/components/FunFactsTicker";
 
@@ -48,8 +48,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Fun Facts Ticker */}
-      <FunFactsTicker facts={siteConfig.funFacts} />
+      {/* Fun Facts Section */}
+      <section className="py-20 px-4 bg-white/5 border-y border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-12 justify-center">
+            <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
+              <Rocket className="w-5 h-5 text-orange-500" />
+            </div>
+            <h2 className="text-3xl font-bold">Fun Facts about me</h2>
+          </div>
+
+          <FunFactsTicker facts={siteConfig.funFacts} />
+        </div>
+      </section>
 
       {/* Chatbot Section */}
       <Chatbot />

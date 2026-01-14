@@ -19,7 +19,7 @@ export default function Chatbot() {
                         Don't hunt through a PDF. <span className="text-gradient">Just ask.</span>
                     </h2>
                     <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                        I built this RAG-style AI assistant using <strong>n8n</strong> and <strong>GPT-4</strong> to provide instant answers about my career, skills, and projects.
+                        I built this RAG-style AI assistant using <strong>n8n</strong> and <strong>Gemini 3</strong> to provide instant answers about my career, skills, and projects.
                     </p>
                 </div>
 
@@ -51,7 +51,7 @@ export default function Chatbot() {
 
                         <div className="p-3 bg-white/5 border-t border-white/10 glass">
                             <p className="text-[11px] text-center text-muted-foreground font-medium uppercase tracking-wider">
-                                Powered by n8n + OpenAI + Vector Embeddings
+                                Powered by n8n + Gemini 3 + Vector Embeddings
                             </p>
                         </div>
                     </div>

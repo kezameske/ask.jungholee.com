@@ -33,37 +33,28 @@ export default function FunFactsTicker({ facts }: FunFactsTickerProps) {
     const Icon = getIcon(currentFact);
 
     return (
-        <div className="w-full bg-white/5 border-y border-white/5 overflow-hidden backdrop-blur-sm">
-            <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-center relative">
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={index}
-                        initial={{ x: 50, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: -50, opacity: 0 }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
-                        className="flex items-center gap-3 absolute w-full justify-center px-4"
-                    >
-                        <div className="w-8 h-8 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
-                            <Icon className="w-4 h-4 text-indigo-400" />
+        <div className="w-full relative overflow-hidden min-h-[120px] flex items-center justify-center">
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={index}
+                    initial={{ x: 100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -100, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="absolute w-full max-w-2xl px-4"
+                >
+                    <div className="glass p-8 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center gap-6 text-center md:text-left hover:border-indigo-500/30 transition-all shadow-xl shadow-indigo-500/5">
+                        <div className="w-12 h-12 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
+                            <Icon className="w-6 h-6 text-indigo-400" />
                         </div>
-                        <p className="text-sm md:text-base text-muted-foreground font-medium truncate max-w-[80vw]">
-                            {currentFact}
-                        </p>
-                    </motion.div>
-                </AnimatePresence>
-
-                {/* Progress bar for the timer */}
-                <div className="absolute bottom-0 left-0 h-0.5 bg-indigo-500/30 w-full">
-                    <motion.div
-                        key={index} // Reset animation on index change
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: 10, ease: "linear" }}
-                        className="h-full bg-indigo-500"
-                    />
-                </div>
-            </div>
+                        <div>
+                            <p className="text-lg text-muted-foreground font-medium leading-relaxed">
+                                {currentFact}
+                            </p>
+                        </div>
+                    </div>
+                </motion.div>
+            </AnimatePresence>
         </div>
     );
 }
