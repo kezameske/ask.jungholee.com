@@ -6,7 +6,7 @@ export const siteConfig = {
   links: {
     linkedin: "https://www.linkedin.com/in/jungholeee/",
     github: "https://github.com/kezameske",
-    resume: "https://drive.google.com/file/d/12aOGTIrzeI9nouFuToYMLmq77-PyXT26/view?usp=sharing",
+    resume: "https://drive.google.com/file/d/1qExuANCJKsNiy0A6TxP72PfkJ6bWR-ly/view?usp=sharing",
   },
   n8nWebhookUrl: "https://n8n.odkmedia.net/webhook/b8803833-acd7-400b-b40c-9940983118c6/chat",
   funFacts: [
