@@ -2,8 +2,11 @@ import { siteConfig } from "@/config/site";
 import { Download, MessageSquare, Rocket } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
 import FunFactsTicker from "@/components/FunFactsTicker";
+import { getSiteContent } from "@/lib/airtable";
 
-export default function Home() {
+export default async function Home() {
+  const content = await getSiteContent();
+
   return (
     <main className="min-h-screen selection:bg-indigo-500/30">
       {/* Hero Section */}
@@ -15,16 +18,16 @@ export default function Home() {
         </div>
 
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+          <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-6">
             Hi, I'm <span className="text-gradient">{siteConfig.name}</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground font-medium mb-8 max-w-3xl mx-auto leading-relaxed">
-            {siteConfig.headline}
+            {content.headline || siteConfig.headline}
           </p>
 
           <p className="text-lg md:text-xl text-muted-foreground/80 mb-10 max-w-2xl mx-auto leading-relaxed">
-            {siteConfig.pitch}
+            {content.pitch || siteConfig.pitch}
           </p>
 
           <div className="flex flex-wrap justify-center gap-4">
@@ -58,12 +61,15 @@ export default function Home() {
             <h2 className="text-3xl font-bold">Fun Facts about me</h2>
           </div>
 
-          <FunFactsTicker facts={siteConfig.funFacts} />
+          <FunFactsTicker facts={content.funFacts.length > 0 ? content.funFacts : siteConfig.funFacts} />
         </div>
       </section>
 
       {/* Chatbot Section */}
-      <Chatbot />
+      <Chatbot
+        askHeadline={content.askHeadline}
+        starterChips={content.starterChips.length > 0 ? content.starterChips : siteConfig.starterChips}
+      />
 
       {/* Footer */}
       <footer className="py-20 px-4 border-t border-white/5">
@@ -85,3 +91,4 @@ export default function Home() {
     </main>
   );
 }
+

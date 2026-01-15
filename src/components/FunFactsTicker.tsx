@@ -43,7 +43,7 @@ export default function FunFactsTicker({ facts }: FunFactsTickerProps) {
                     transition={{ duration: 0.5, ease: "easeInOut" }}
                     className="absolute w-full max-w-2xl px-4"
                 >
-                    <div className="glass p-8 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center gap-6 text-center md:text-left hover:border-indigo-500/30 transition-all shadow-xl shadow-indigo-500/5">
+                    <div className="glass p-6 md:p-8 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center gap-6 text-center md:text-left hover:border-indigo-500/30 transition-all shadow-xl shadow-indigo-500/5">
                         <div className="w-12 h-12 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
                             <Icon className="w-6 h-6 text-indigo-400" />
                         </div>

@@ -6,12 +6,15 @@ import "@n8n/chat/dist/style.css";
 import { siteConfig } from "@/config/site";
 import { Bot, Sparkles, MessageSquare, ArrowRight, User } from "lucide-react";
 
-export default function ChatInterface() {
+export default function ChatInterface({ starterChips }: { starterChips?: string[] }) {
     const containerRef = useRef<HTMLDivElement>(null);
     const chatInstance = useRef<any>(null);
     const [name, setName] = useState("");
     const [isStarted, setIsStarted] = useState(false);
     const [inputName, setInputName] = useState("");
+
+    const activeChips = starterChips || siteConfig.starterChips;
+
 
     const handleStart = (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,16 +29,16 @@ export default function ChatInterface() {
             setName("Guest");
             setIsStarted(true);
 
-            // Wait for chat to initialize then send
+            // Wait for chat to initialize then fill
             setTimeout(() => {
-                sendMessage(question);
+                fillInput(question);
             }, 1000);
             return;
         }
-        sendMessage(question);
+        fillInput(question);
     };
 
-    const sendMessage = (text: string) => {
+    const fillInput = (text: string) => {
         // Query more aggressively for the input
         const inputField = document.querySelector('textarea.n8n-chat-widget-input') as HTMLTextAreaElement || document.querySelector('input.n8n-chat-widget-input') as HTMLInputElement;
 
@@ -46,12 +49,8 @@ export default function ChatInterface() {
             nativeInputValueSetter?.call(inputField, text);
             inputField.dispatchEvent(new Event('input', { bubbles: true }));
 
-            setTimeout(() => {
-                const enterEvent = new KeyboardEvent('keydown', {
-                    bubbles: true, cancelable: true, key: 'Enter', code: 'Enter', keyCode: 13
-                });
-                inputField.dispatchEvent(enterEvent);
-            }, 100);
+            // Focus the input
+            inputField.focus();
         }
     };
 
@@ -158,11 +157,12 @@ export default function ChatInterface() {
                         Try asking...
                     </h3>
                     <div className="grid gap-3">
-                        {siteConfig.starterChips.map((chip, i) => (
+                        {activeChips.map((chip, i) => (
                             <button
                                 key={i}
                                 onClick={() => handleChipClick(chip)}
-                                className="text-left w-full text-xs md:text-sm p-3 md:p-3.5 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all text-muted-foreground hover:text-white cursor-pointer leading-snug active:scale-[0.98]"
+
+                                className="text-left w-full text-xs md:text-sm p-3 md:p-3.5 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all text-muted-foreground hover:text-white cursor-pointer leading-snug active:scale-[0.98] whitespace-normal h-auto"
                             >
                                 "{chip}"
                             </button>
@@ -276,6 +276,14 @@ export default function ChatInterface() {
                 .n8n-chat-widget-window,
                 .n8n-chat-widget-messages {
                     background: transparent !important;
+                }
+
+                /* Prevent text cutoff */
+                .n8n-chat-widget-message-body,
+                .n8n-chat-widget-input {
+                    word-break: break-word !important;
+                    overflow-wrap: break-word !important;
+                    white-space: pre-wrap !important;
                 }
             `}</style>
         </div>
