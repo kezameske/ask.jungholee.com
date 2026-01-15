@@ -39,12 +39,17 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
     };
 
     const fillInput = (text: string) => {
-        // Query more aggressively for the input
-        const inputField = document.querySelector('textarea.n8n-chat-widget-input') as HTMLTextAreaElement || document.querySelector('input.n8n-chat-widget-input') as HTMLInputElement;
+        // Query more aggressively for the input using multiple known selectors
+        const inputField =
+            document.querySelector('textarea.n8n-chat-widget-input') as HTMLTextAreaElement ||
+            document.querySelector('input.n8n-chat-widget-input') as HTMLInputElement ||
+            document.querySelector('.chat-inputs textarea') as HTMLTextAreaElement ||
+            document.querySelector('.n8n-chat-widget-input-wrapper textarea') as HTMLTextAreaElement;
 
         if (inputField) {
             // React/Vue hack: set value and dispatch events
-            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value")?.set || Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value")?.set;
+            const prototype = inputField instanceof HTMLTextAreaElement ? window.HTMLTextAreaElement.prototype : window.HTMLInputElement.prototype;
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(prototype, "value")?.set;
 
             nativeInputValueSetter?.call(inputField, text);
             inputField.dispatchEvent(new Event('input', { bubbles: true }));
@@ -126,7 +131,6 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
                                         value={inputName}
                                         onChange={(e) => setInputName(e.target.value)}
                                         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-indigo-500/50 focus:bg-white/10 outline-none text-center placeholder:text-muted-foreground/50 transition-all font-medium"
-                                        autoFocus
                                     />
                                     <button
                                         type="submit"

@@ -8,7 +8,7 @@ export const siteConfig = {
     github: "https://github.com/kezameske",
     resume: "https://drive.google.com/file/d/12aOGTIrzeI9nouFuToYMLmq77-PyXT26/view?usp=sharing",
   },
-  n8nWebhookUrl: "https://n8n.hanin.store/webhook/b8803833-acd7-400b-b40c-9940983118c6/chat",
+  n8nWebhookUrl: "https://n8n.odkmedia.net/webhook/b8803833-acd7-400b-b40c-9940983118c6/chat",
   funFacts: [
     "Started a PC cybercafe business at 20 while working a full-time job.",
     "Car enthusiast: I engine-swapped my own car and raced it.",
