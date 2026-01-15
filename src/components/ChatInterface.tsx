@@ -13,7 +13,7 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
     const [isStarted, setIsStarted] = useState(false);
     const [inputName, setInputName] = useState("");
 
-    const activeChips = starterChips || siteConfig.starterChips;
+    const activeChips = (starterChips && starterChips.length > 0) ? starterChips : siteConfig.starterChips;
 
 
     const handleStart = (e: React.FormEvent) => {

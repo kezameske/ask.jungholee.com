@@ -6,10 +6,10 @@ import { siteConfig } from "@/config/site";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} | Business Operations & AI Automation`,
+  title: `${siteConfig.name} | Interactive Portfolio`,
   description: siteConfig.headline,
   openGraph: {
-    title: `${siteConfig.name} | Resume & AI Assistant`,
+    title: `${siteConfig.name} | Interactive Portfolio`,
     description: siteConfig.headline,
     type: "website",
   },
