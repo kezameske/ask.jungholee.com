@@ -2,17 +2,35 @@ const AIRTABLE_PAT = process.env.AIRTABLE_PAT;
 const BASE_ID = process.env.AIRTABLE_BASE_ID;
 
 export async function fetchAirtableData(tableId: string) {
+    if (!AIRTABLE_PAT || !BASE_ID) {
+        console.error("Missing Airtable env vars", {
+            hasPat: Boolean(AIRTABLE_PAT),
+            hasBaseId: Boolean(BASE_ID),
+            tableId,
+        });
+        return [];
+    }
+
     const url = `https://api.airtable.com/v0/${BASE_ID}/${tableId}`;
 
-    const response = await fetch(
-        url,
-        {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+
+    let response: Response;
+    try {
+        response = await fetch(url, {
             headers: {
                 Authorization: `Bearer ${AIRTABLE_PAT}`,
             },
-            cache: 'no-store',
-        }
-    );
+            cache: "no-store",
+            signal: controller.signal,
+        });
+    } catch (error) {
+        console.error(`Failed to fetch Airtable table ${tableId}:`, error);
+        return [];
+    } finally {
+        clearTimeout(timeout);
+    }
 
     if (!response.ok) {
         // Log verification error but don't crash app if optional data fails?
@@ -26,11 +44,10 @@ export async function fetchAirtableData(tableId: string) {
 }
 
 export async function getSiteContent() {
-    // Using Table Names instead of IDs because IDs were returning 403 Forbidden for some reason,
-    // while Names were verified to work via test script.
-    const mainPromise = fetchAirtableData('tbl0QHHqLlFfBX06k'); // Main ID worked
-    const funFactsPromise = fetchAirtableData(encodeURIComponent('Fun Facts about me'));
-    const tryAskingPromise = fetchAirtableData(encodeURIComponent('Try asking'));
+    // Prefer Airtable table IDs to avoid table-name drift.
+    const mainPromise = fetchAirtableData("tbl0QHHqLlFfBX06k");
+    const funFactsPromise = fetchAirtableData("tbljzsE6JcN6ECNzt");
+    const tryAskingPromise = fetchAirtableData("tbl6kh5L0QWxJoXzb");
 
     const [mainResult, funFactsResult, tryAskingResult] = await Promise.allSettled([
         mainPromise,
