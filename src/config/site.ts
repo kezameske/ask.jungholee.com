@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: "Jungho Lee",
-  headline: "Product Manager who loves shipping, unblocking, and automating the boring stuff.",
-  pitch: "I’ve spent 4+ years in product and 8+ years in tech, delivering streaming products and operational improvements across teams. Also: I built this chatbot so you don’t have to hunt through a PDF.",
+  headline: "Product Manager who loves shipping across platforms, unblocking teams, and automating the boring stuff.",
+  pitch: "I've spent 5 years in product and 10 years in tech — shipping streaming products across mobile and CTV, optimizing ad tech, and building AI-powered automation. Also: I built this chatbot so you don't have to hunt through a PDF.",
   email: "kezameske@gmail.com",
   links: {
     linkedin: "https://www.linkedin.com/in/jungholeee/",
     github: "https://github.com/kezameske",
-    resume: "https://drive.google.com/file/d/1mOyQhbFTX4rLddBC2cDY0XUwpurV7B6o/view?usp=drive_link",
+    resume: "https://drive.google.com/file/d/1vROhiGjglC4brdZeXuiaMCgkUL3l0WML/view?usp=sharing",
   },
   n8nWebhookUrl: "https://n8n.hanin.store/webhook/b8803833-acd7-400b-b40c-9940983118c6/chat",
   funFacts: [
