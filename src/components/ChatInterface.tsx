@@ -57,6 +57,27 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
         }
     };
 
+    // Prevent n8n chat's scrollIntoView from scrolling the page
+    useEffect(() => {
+        if (!isStarted) return;
+        const origScrollIntoView = Element.prototype.scrollIntoView;
+        Element.prototype.scrollIntoView = function(opts) {
+            // If this element is inside our chat container, scroll only the chat body
+            if (this.closest?.('.n8n-chat-container')) {
+                const chatBody = this.closest('.chat-body');
+                if (chatBody) {
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                    return;
+                }
+            }
+            // Otherwise, use the original behavior
+            origScrollIntoView.call(this, opts);
+        };
+        return () => {
+            Element.prototype.scrollIntoView = origScrollIntoView;
+        };
+    }, [isStarted]);
+
     useEffect(() => {
         if (!isStarted || !containerRef.current || chatInstance.current) return;
 
@@ -185,6 +206,16 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
                 .n8n-chat-container {
                   height: 100% !important;
                   width: 100% !important;
+                  overflow: hidden !important;
+                }
+
+                .n8n-chat-container > div,
+                .n8n-chat-container .n8n-chat {
+                  height: 100% !important;
+                  width: 100% !important;
+                }
+
+                .n8n-chat-container {
 
                   --chat--color--primary: #c2956b;
                   --chat--color--primary-shade-50: #a87a52;
@@ -233,18 +264,34 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
                   display: flex !important;
                   flex-direction: column !important;
                   background: transparent !important;
+                  overflow: hidden !important;
                 }
 
                 /* === Messages Area === */
                 .chat-body {
                   flex: 1 !important;
                   overflow-y: auto !important;
+                  overflow-x: hidden !important;
                   overscroll-behavior: contain !important;
                   padding: 20px !important;
                   background: transparent !important;
                 }
 
+                /* Prevent scrollIntoView from scrolling the page */
+                .chat-messages-list {
+                  overflow-anchor: auto !important;
+                }
+
                 /* === Input Area === */
+                .chat-footer {
+                  width: 100% !important;
+                  flex-shrink: 0 !important;
+                }
+
+                .chat-input {
+                  width: 100% !important;
+                }
+
                 .chat-inputs {
                   display: flex !important;
                   position: relative !important;
