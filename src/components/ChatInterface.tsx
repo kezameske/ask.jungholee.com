@@ -289,7 +289,6 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
                   display: none !important;
                 }
 
-                .chat-footer,
                 a[href*="n8n.io"] {
                   display: none !important;
                   height: 0 !important;
