@@ -43,8 +43,7 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
     const fillInput = (text: string) => {
         const inputField =
             document.querySelector('.chat-inputs textarea') as HTMLTextAreaElement ||
-            document.querySelector('.chat-textarea') as HTMLTextAreaElement ||
-            document.querySelector('textarea.chat-textarea') as HTMLTextAreaElement ||
+            document.querySelector('.chat-input textarea') as HTMLTextAreaElement ||
             document.querySelector('.n8n-chat-container textarea') as HTMLTextAreaElement;
 
         if (inputField) {
@@ -207,7 +206,12 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
                   --chat--message--border-radius: 0.75rem;
 
                   --chat--input--background: rgba(255, 255, 255, 0.04);
+                  --chat--input--text-color: white;
+                  --chat--input--border: 1px solid rgba(255, 255, 255, 0.08);
+                  --chat--input--border-active: 1px solid rgba(194, 149, 107, 0.3);
+                  --chat--input--border-radius: 12px;
                   --chat--textarea--height: 44px;
+                  --chat--body--background: transparent;
 
                   --chat--button--background: #c2956b;
                   --chat--button--color: #0c0a09;
@@ -259,7 +263,7 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
                   gap: 8px !important;
                 }
 
-                .chat-textarea {
+                .chat-inputs textarea {
                   width: 100% !important;
                   color: white !important;
                   background: rgba(255, 255, 255, 0.04) !important;
@@ -271,11 +275,11 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
                   font-family: var(--font-outfit), system-ui, sans-serif !important;
                 }
 
-                .chat-textarea::placeholder {
+                .chat-inputs textarea::placeholder {
                   color: rgba(255, 255, 255, 0.3) !important;
                 }
 
-                .chat-textarea:focus {
+                .chat-inputs textarea:focus {
                   border-color: rgba(194, 149, 107, 0.3) !important;
                   background: rgba(255, 255, 255, 0.06) !important;
                 }
