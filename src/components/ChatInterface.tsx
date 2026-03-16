@@ -290,10 +290,12 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
 
                 .chat-input {
                   width: 100% !important;
+                  align-items: stretch !important;
                 }
 
                 .chat-inputs {
                   display: flex !important;
+                  width: 100% !important;
                   position: relative !important;
                   padding: 16px !important;
                   background: rgba(12, 10, 9, 0.8) !important;
@@ -303,15 +305,9 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
                   z-index: 50 !important;
                 }
 
-                .chat-inputs-controls {
-                  display: flex !important;
-                  width: 100% !important;
-                  align-items: flex-end !important;
-                  gap: 8px !important;
-                }
-
                 .chat-inputs textarea {
-                  width: 100% !important;
+                  flex: 1 !important;
+                  min-width: 0 !important;
                   color: white !important;
                   background: rgba(255, 255, 255, 0.04) !important;
                   border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -329,6 +325,10 @@ export default function ChatInterface({ starterChips }: { starterChips?: string[
                 .chat-inputs textarea:focus {
                   border-color: rgba(194, 149, 107, 0.3) !important;
                   background: rgba(255, 255, 255, 0.06) !important;
+                }
+
+                .chat-inputs-controls {
+                  flex-shrink: 0 !important;
                 }
 
                 /* === Hide header, footer, branding === */
