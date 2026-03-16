@@ -1,94 +1,164 @@
 import { siteConfig } from "@/config/site";
-import { Download, MessageSquare, Rocket } from "lucide-react";
+import { Download, MessageSquare, ArrowRight, Mail } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
-import FunFactsTicker from "@/components/FunFactsTicker";
+import StickyNav from "@/components/StickyNav";
+import AboutSection from "@/components/AboutSection";
+import ExperienceSection from "@/components/ExperienceSection";
+import ProjectsSection from "@/components/ProjectsSection";
+import SkillsSection from "@/components/SkillsSection";
+import SectionTracker from "@/components/SectionTracker";
+import TrackableLink from "@/components/TrackableLink";
 import { getSiteContent } from "@/lib/airtable";
 
 export default async function Home() {
   const content = await getSiteContent();
 
   return (
-    <main className="min-h-screen selection:bg-indigo-500/30">
+    <main className="min-h-screen selection:bg-[#c2956b]/30">
+      <StickyNav />
+
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Background blobs */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full animate-pulse"></div>
-          <div className="absolute bottom-[10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/10 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
+      <section className="relative pt-28 pb-20 px-4 overflow-hidden min-h-[60vh] flex items-center">
+        {/* Subtle warm glow */}
+        <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#c2956b]/[0.03] blur-[150px] rounded-full -z-10" />
 
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-6">
-            Hi, I'm <span className="text-gradient">{siteConfig.name}</span>
-          </h1>
-
-          <p className="text-xl md:text-2xl text-muted-foreground font-medium mb-8 max-w-3xl mx-auto leading-relaxed">
+        <div className="max-w-5xl mx-auto w-full">
+          <p className="text-xs uppercase tracking-[0.3em] text-[#c2956b] font-medium mb-6">
             {content.headline || siteConfig.headline}
           </p>
 
-          <p className="text-lg md:text-xl text-muted-foreground/80 mb-10 max-w-2xl mx-auto leading-relaxed">
-            {content.pitch || siteConfig.pitch}
+          <h1
+            className="text-4xl md:text-7xl font-light tracking-tight mb-4 leading-[0.95]"
+            style={{ fontFamily: "var(--font-display), serif", textWrap: "balance" }}
+          >
+            {siteConfig.heroHeadline}
+          </h1>
+
+          <p className="text-lg md:text-2xl text-[#a8a29e]/80 mb-12"
+            style={{ fontFamily: "var(--font-display), serif" }}
+          >
+            {siteConfig.name}
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap gap-4">
             <a
               href="#chat"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-indigo-600/20"
+              className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#c2956b] hover:bg-[#d4ad82] text-[#0c0a09] font-semibold text-sm transition-colors hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c2956b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]"
             >
-              <MessageSquare className="w-5 h-5" />
+              <MessageSquare className="w-4 h-4" aria-hidden="true" />
               Ask my AI Assistant
             </a>
-            <a
+            <TrackableLink
               href={siteConfig.links.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl glass hover:bg-white/10 font-semibold transition-all hover:scale-105 active:scale-95 border border-white/10"
+              eventName="resume_click"
+              className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/10 hover:border-[#c2956b]/30 text-white/70 hover:text-white font-medium text-sm transition-colors hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c2956b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]"
             >
-              <Download className="w-5 h-5" />
+              <Download className="w-4 h-4" aria-hidden="true" />
               Resume (PDF)
-            </a>
+            </TrackableLink>
           </div>
         </div>
       </section>
 
-      {/* Fun Facts Section */}
-      <section className="py-20 px-4 bg-white/5 border-y border-white/5">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-center gap-3 mb-12 justify-center">
-            <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
-              <Rocket className="w-5 h-5 text-orange-500" />
-            </div>
-            <h2 className="text-3xl font-bold">Fun Facts about me</h2>
-          </div>
+      <div className="section-divider" />
 
-          <FunFactsTicker facts={content.funFacts.length > 0 ? content.funFacts : siteConfig.funFacts} />
+      {/* About (now includes Fun Facts) */}
+      <SectionTracker id="about">
+        <AboutSection funFacts={siteConfig.funFacts} />
+      </SectionTracker>
+
+      <div className="section-divider" />
+
+      {/* Experience */}
+      <SectionTracker id="experience">
+        <ExperienceSection />
+      </SectionTracker>
+
+      <div className="section-divider" />
+
+      {/* Projects */}
+      <SectionTracker id="projects">
+        <ProjectsSection />
+      </SectionTracker>
+
+      <div className="section-divider" />
+
+      {/* Chatbot */}
+      <SectionTracker id="chat">
+        <Chatbot
+          askHeadline={content.askHeadline}
+          starterChips={siteConfig.starterChips}
+        />
+      </SectionTracker>
+
+      <div className="section-divider" />
+
+      {/* Skills */}
+      <SectionTracker id="skills">
+        <SkillsSection />
+      </SectionTracker>
+
+      <div className="section-divider" />
+
+      {/* Footer CTA */}
+      <section className="py-20 px-4">
+        <div className="max-w-2xl mx-auto text-center space-y-6">
+          <h2
+            className="text-3xl md:text-5xl font-light tracking-tight"
+            style={{ fontFamily: "var(--font-display), serif", textWrap: "balance" }}
+          >
+            {siteConfig.footerCta.headline}
+          </h2>
+          <p className="text-[#a8a29e] text-lg leading-relaxed">
+            {siteConfig.footerCta.subtext}
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <TrackableLink
+              href={siteConfig.links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              eventName="cta_click"
+              eventProps={{ target: "linkedin" }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#c2956b] hover:bg-[#d4ad82] text-[#0c0a09] font-semibold text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c2956b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]"
+            >
+              LinkedIn
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </TrackableLink>
+            <TrackableLink
+              href={`mailto:${siteConfig.email}`}
+              eventName="cta_click"
+              eventProps={{ target: "email" }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/10 hover:border-[#c2956b]/30 text-white/70 hover:text-white font-medium text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c2956b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]"
+            >
+              <Mail className="w-4 h-4" aria-hidden="true" />
+              Email Me
+            </TrackableLink>
+          </div>
         </div>
       </section>
-
-      {/* Chatbot Section */}
-      <Chatbot
-        askHeadline={content.askHeadline}
-        starterChips={content.starterChips.length > 0 ? content.starterChips : siteConfig.starterChips}
-      />
 
       {/* Footer */}
-      <footer className="py-20 px-4 border-t border-white/5">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div>
-            <h3 className="text-2xl font-bold mb-2">{siteConfig.name}</h3>
-
-          </div>
+      <footer className="py-16 px-4 border-t border-white/5">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <span className="text-sm text-[#78716c]">
+            © {new Date().getFullYear()} {siteConfig.name}
+          </span>
 
           <div className="flex gap-6">
-            <a href={`mailto:${siteConfig.email}`} className="text-muted-foreground hover:text-white transition-colors">Email</a>
-            <a href={siteConfig.links.linkedin} target="_blank" className="text-muted-foreground hover:text-white transition-colors">LinkedIn</a>
-            <a href={siteConfig.links.github} target="_blank" className="text-muted-foreground hover:text-white transition-colors">GitHub</a>
+            <a href={`mailto:${siteConfig.email}`} className="text-sm text-[#78716c] hover:text-[#c2956b] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c2956b] rounded">
+              Email
+            </a>
+            <a href={siteConfig.links.linkedin} target="_blank" rel="noopener noreferrer" className="text-sm text-[#78716c] hover:text-[#c2956b] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c2956b] rounded">
+              LinkedIn
+            </a>
+            <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className="text-sm text-[#78716c] hover:text-[#c2956b] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c2956b] rounded">
+              GitHub
+            </a>
           </div>
-
-
         </div>
       </footer>
     </main>
   );
 }
-

@@ -44,29 +44,9 @@ export async function fetchAirtableData(tableId: string) {
 }
 
 export async function getSiteContent() {
-    // Prefer Airtable table IDs to avoid table-name drift.
-    const mainPromise = fetchAirtableData("tbl0QHHqLlFfBX06k");
-    const funFactsPromise = fetchAirtableData("tbljzsE6JcN6ECNzt");
-    const tryAskingPromise = fetchAirtableData("tbl6kh5L0QWxJoXzb");
-
-    const [mainResult, funFactsResult, tryAskingResult] = await Promise.allSettled([
-        mainPromise,
-        funFactsPromise,
-        tryAskingPromise
-    ]);
-
-    // Helper to get value or empty array
-    const getRecords = (result: PromiseSettledResult<any[]>) =>
-        result.status === 'fulfilled' ? result.value : [];
-
-    const mainRecords = getRecords(mainResult);
-    const funFactsRecords = getRecords(funFactsResult);
-    const tryAskingRecords = getRecords(tryAskingResult);
-
-    // Log errors if any
-    if (mainResult.status === 'rejected') console.error("Main table failed:", mainResult.reason);
-    if (funFactsResult.status === 'rejected') console.error("Fun Facts failed:", funFactsResult.reason);
-    if (tryAskingResult.status === 'rejected') console.error("Try Asking failed:", tryAskingResult.reason);
+    // Only fetch the main config table from Airtable.
+    // Fun facts and starter chips are hardcoded in siteConfig (sourced from profile.md).
+    const mainRecords = await fetchAirtableData("tbl0QHHqLlFfBX06k");
 
     const main = mainRecords.reduce((acc: any, record: any) => {
         if (record.fields.Name && record.fields.Title) {
@@ -75,19 +55,9 @@ export async function getSiteContent() {
         return acc;
     }, {});
 
-    const funFacts = funFactsRecords
-        .map((record: any) => record.fields.Name)
-        .filter(Boolean); // Filter out undefined/null names
-
-    const starterChips = tryAskingRecords
-        .map((record: any) => record.fields.Name)
-        .filter(Boolean);
-
     return {
         headline: main.Main,
         pitch: main.body2,
         askHeadline: main.Ask,
-        funFacts,
-        starterChips,
     };
 }
